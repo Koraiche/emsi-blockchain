@@ -1,22 +1,31 @@
 #include "hblk_crypto.h"
-/*
- * - @ec_load : returns the key or NULL
- **/
+
 EC_KEY *ec_load(char const *folder)
 {
-EC_KEY *key = NULL;
-char buf[500];
-FILE *fp;
-sprintf(buf, "%s/%s", folder, PUB_FILENAME);
-fp = fopen(buf, "r");
-if (!fp || !folder)
-return (NULL);
-if (!PEM_read_EC_PUBKEY(fp, &key, NULL, NULL))
-return (NULL);
-sprintf(buf, "%s/%s", folder, PRI_FILENAME);
-fp = fopen(buf, "r");
-if (!fp || !PEM_read_ECPrivateKey(fp, &key, NULL, NULL))
-return (NULL);
-fclose(fp);
-return (key);
+	EC_KEY *key = NULL;
+	char file[512] = {0};
+	FILE *f;
+	struct stat st;
+
+	if (!folder)
+		return NULL;
+	if (stat(folder, &st) == -1)
+		return NULL;
+	sprintf(file, "./%s/%s", folder, PUB_FILENAME);
+	f = fopen(file, "r");
+	if (!f)
+		return NULL;
+	if (!PEM_read_EC_PUBKEY(f, &key, NULL, NULL))
+		return NULL;
+	fclose(f);
+	sprintf(file, "./%s/%s", folder, PRI_FILENAME);
+	f = fopen(file, "r");
+	if (!f)
+		return NULL;
+	if (!PEM_read_ECPrivateKey(f, &key, NULL, NULL))
+		return NULL;
+	fclose(f);
+	return key;
 }
+
+
