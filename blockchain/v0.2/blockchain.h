@@ -25,6 +25,8 @@
 "\x0c\x8e\x00\x09\xc8\x17\xf2\xb1\xd3\xd7\xff\x2f\x04\x51\x58\x03" \
 }
 
+#define BLOCK_GENERATION_INTERVAL 1
+#define DIFFICULTY_ADJUSTMENT_INTERVAL 5
 
 typedef struct blockchain_s
 {
