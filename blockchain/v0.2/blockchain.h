@@ -80,4 +80,5 @@ int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH], uint32_t d
 uint8_t _get_endianness(void);
 void _swap_endian(void *p, size_t size);
 void block_mine(block_t *block);
+uint32_t blockchain_difficulty(blockchain_t const *blockchain);
 #endif 
