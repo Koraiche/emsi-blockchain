@@ -20,7 +20,7 @@ return (NULL);
 sig->len = ECDSA_size(key);
 if (!sig->len)
 return (NULL);
-if (ECDSA_sign(EC_CURVE, md, SHA256_DIGEST_LENGTH, sig->,
+if (!ECDSA_sign(EC_CURVE, md, SHA256_DIGEST_LENGTH, sig->,
 (unsigned int *)&(sig->len), (EC_KEY *)key))
 return (NULL);
 return (sig->sig);
