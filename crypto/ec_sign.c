@@ -18,7 +18,7 @@ return (NULL);
 if (!SHA256(msg, msglen, md))
 return (NULL);
 sig->len = ECDSA_size(key);
-if (sig->len)
+if (!sig->len)
 return (NULL);
 if (!ECDSA_sign(EC_CURVE, md, SHA256_DIGEST_LENGTH, sig->,
 (unsigned int *)&(sig->len), (EC_KEY *)key))
